@@ -12,7 +12,10 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
   next()
 })
-
+app.use((req, _res, next) => {
+  req.setTimeout(10000)
+  next()
+})
 app.use('/api', routes)
 
 export default app
