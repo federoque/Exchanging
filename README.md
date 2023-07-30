@@ -12,9 +12,11 @@ cd Backend
 
 - Posicionado sobre la carpeta Backend crear archivo .env dev variables de entorno con las siguiente variables:
 
+```
 PORT=TU_PUERTO
 APIKEY= API_KEY_DE_MESSARI
 APIURL=https://data.messari.io/api/v1/
+```
 
 Luego en la consola ejecutar:
 
@@ -39,6 +41,7 @@ Posicionado sobre la carpeta Client ejecutar
 npm install
 
 `npm install --force` en caso de que ocurra algun error a la hora de la instalación <br/>
+
 
 Luego ejececutar:
 
