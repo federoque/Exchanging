@@ -7,7 +7,8 @@ const AppContextProvider = ({children}) =>{
 
     const [state, setState] = useState({
         loading: true,
-        data: null
+        data: null,
+        filterdata:null
     });
 
     const getData = async () => {
@@ -15,13 +16,15 @@ const AppContextProvider = ({children}) =>{
         const response = await axios.get('http://localhost:3001/api/criptos');
         setState({
             loading:false,
-            data: response.data
+            data: response.data,
+            filterdata: response.data.data
         });
     } catch (error) {
         console.log(error)
         setState({
             loading:false,
-            data: null
+            data: null,
+            filterdata: null
         });
      }
     }
@@ -36,7 +39,7 @@ const AppContextProvider = ({children}) =>{
 
 
     return (
-        <AppContext.Provider value={{ state }}>
+        <AppContext.Provider value={{ state, setState }}>
           {children}
         </AppContext.Provider>
       );
