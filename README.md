@@ -28,6 +28,8 @@ npm run dev
 
 Se correra el backend en el puerto que se haya creado en el arvhivo .env de variables de entorno
 
+## FRONTEND
+
 - Abrir otra consola parado sobre la carpeta raiz y ejecutar: 
 
 cd Client
