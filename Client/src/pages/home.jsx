@@ -16,7 +16,7 @@ const Home = () => {
         setState(prev=>{
             return{
                 ...prev,
-                filterdata: state.data.data.filter(item=> item.data.name.toLowerCase().includes(e.target.value))
+                filterdata: state.data.data.filter(item=> item.data.name.toLowerCase().includes(e.target.value) || item.data.symbol.toLowerCase().includes(e.target.value))
             }
         })
     }

@@ -8,7 +8,10 @@ const AppContextProvider = ({children}) =>{
     const [state, setState] = useState({
         loading: true,
         data: null,
-        filterdata:null
+        filterdata:null,
+        btc_price: null,
+        eth_price: null,
+        ada_price: null
     });
 
     const getData = async () => {
@@ -17,14 +20,20 @@ const AppContextProvider = ({children}) =>{
         setState({
             loading:false,
             data: response.data,
-            filterdata: response.data.data
+            filterdata: response.data.data,
+            btc_price: response.data.data.find(item=> item.data.name=="Bitcoin").data.price_usd,
+            eth_price: response.data.data.find(item=> item.data.name=="Ethereum").data.price_usd,
+            ada_price: response.data.data.find(item=> item.data.name=="Cardano").data.price_usd,
         });
     } catch (error) {
         console.log(error)
         setState({
             loading:false,
             data: null,
-            filterdata: null
+            filterdata: null,
+            btc_price: null,
+            eth_price: null,
+            ada_price: null
         });
      }
     }
