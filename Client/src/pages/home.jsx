@@ -3,12 +3,13 @@ import Navbar from "../components/navbar";
 import { AppContext } from "../context/context";
 import Graph from "../components/graph";
 import Loader from "../components/loader"
+import papaparse from 'papaparse';
+
 
 
 const Home = () => {
     const { state, setState } = useContext(AppContext)
     const [search, setSearch] = useState("")
-
 
     function handleSearch(e){
         e.preventDefault()
@@ -20,6 +21,68 @@ const Home = () => {
             }
         })
     }
+
+    function handleExportJSon(e){
+        e.preventDefault()
+        const jsonData = JSON.stringify(state.filterdata);
+        const blob = new Blob([jsonData], { type: 'application/json' });
+        const downloadLink = document.createElement('a');
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = 'data.json';
+        downloadLink.click();
+    }
+
+    const handleExportCSV = () => {
+        const csvData = [];
+        csvData.push([
+          'Name',
+          'Symbol',
+          'Price (USD)',
+          'Percent Change (1H)',
+          'Percent Change (24H)',
+          'Market Cap (USD)',
+          'Real Volume (24H)',
+          'Percent Change (1W)',
+          'Percent Change (1M)',
+          'Percent Change (1Y)'
+        ]);
+    
+        state.filterdata.forEach((item) => {
+          const {
+            name,
+            symbol,
+            price_usd,
+            percent_change_usd_last_1_hour,
+            percent_change_usd_last_24_hours,
+            current_marketcap_usd,
+            real_volume_last_24_hours,
+            percent_change_last_1_week,
+            percent_change_last_1_month,
+            percent_change_last_1_year
+          } = item.data;
+    
+          csvData.push([
+            name,
+            symbol,
+            price_usd,
+            percent_change_usd_last_1_hour,
+            percent_change_usd_last_24_hours,
+            current_marketcap_usd,
+            real_volume_last_24_hours,
+            percent_change_last_1_week,
+            percent_change_last_1_month,
+            percent_change_last_1_year
+          ]);
+        });
+    
+        const csvString = papaparse.unparse(csvData);
+        const blob = new Blob([csvString], { type: 'text/csv' });
+        const downloadLink = document.createElement('a');
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = 'data.csv';
+        downloadLink.click();
+      };
+
     return !state.data ? 
     <div>
         <>
@@ -39,6 +102,12 @@ const Home = () => {
             <Navbar />
             <div className="h-[90vh] mt-[10vh] w-11/12 ml-10 z-0 flex flex-col items-center">
                 <h2 className="text-3xl font-bold mt-4">Market Overview</h2>
+                <div className="flex justify-center lg:justify-start gap-2 w-full">
+                <button className="self-center mt-2 lg:mt-2 lg:self-start text-xs px-2 py-1 border border-black rounded-full bg-gray-400 hover:bg-gray-500" onClick={handleExportJSon}>Export (Json)
+                </button>
+                <button onClick={handleExportCSV} className="self-center mt-2 lg:mt-2 lg:self-start text-xs px-2 py-1 border border-black rounded-full bg-gray-400 hover:bg-gray-500" >Export (csv)
+                </button>
+                </div>
                 <div className="w-full flex justify-center lg:justify-start items-center">
                     <label className="font-bold">Search: </label>
                     <input value={search} onChange={handleSearch} type="text" placeholder="Search" className="border border-black mt-2 self-start text-center ml-4 rounded-lg px-4 py-1"/>

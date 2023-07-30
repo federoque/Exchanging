@@ -40,10 +40,10 @@ const AppContextProvider = ({children}) =>{
 
     useEffect(() => {
         getData()
-        // const interval = setInterval(() => {
-        //     getData();
-        // }, 120000);
-        // return () => clearInterval(interval)
+        const interval = setInterval(() => {
+            getData();
+        }, 120000);
+        return () => clearInterval(interval)
       }, [])
 
 
