@@ -4,6 +4,7 @@ import { AppContext } from "../context/context";
 import Graph from "../components/graph";
 import Loader from "../components/loader"
 import papaparse from 'papaparse';
+import { FaDownload } from 'react-icons/fa';
 
 
 
@@ -84,10 +85,10 @@ const Home = () => {
       };
 
     return !state.data ? 
-    <div>
+    <div className="bg-gray-100">
         <>
             <Navbar />
-            <div className="h-[90vh] mt-[10vh] w-11/12 ml-10 z-0 flex flex-col items-center">
+            <div className="h-[90vh] mt-[10vh] w-11/12 ml-10 z-0 flex flex-col items-center bg-gray-100">
                 <h2 className="text-3xl font-bold mt-4">Market Overview</h2>
                 <div className="w-full mt-20 h-full">
                 <div className="flex justify-center items-center" role="status">
@@ -98,14 +99,14 @@ const Home = () => {
         </>
     </div>
     :
-        <>
+        <div className="bg-gray-100">
             <Navbar />
-            <div className="h-[90vh] mt-[10vh] w-11/12 ml-10 z-0 flex flex-col items-center">
+            <div className="h-[90vh] mt-[10vh] w-11/12 ml-10 z-0 flex flex-col items-center bg-gray-100">
                 <h2 className="text-3xl font-bold mt-4">Market Overview</h2>
                 <div className="flex justify-center lg:justify-start gap-2 w-full">
-                <button className="self-center mt-2 lg:mt-2 lg:self-start text-xs px-2 py-1 border border-black rounded-full bg-gray-400 hover:bg-gray-500" onClick={handleExportJSon}>Export (Json)
+                <button className="bg-gray-500 hover:bg-gray-600 text-white text-xs py-1 px-1 rounded-full focus:outline-none focus:ring focus:ring-gray-400 flex items-center" onClick={handleExportJSon}> <FaDownload className="mr-1" /> json
                 </button>
-                <button onClick={handleExportCSV} className="self-center mt-2 lg:mt-2 lg:self-start text-xs px-2 py-1 border border-black rounded-full bg-gray-400 hover:bg-gray-500" >Export (csv)
+                <button className="bg-gray-500 hover:bg-gray-600 text-white text-xs py-1 px-1 rounded-full focus:outline-none focus:ring focus:ring-gray-400 flex items-center" onClick={handleExportCSV}> <FaDownload className="mr-1" /> csv
                 </button>
                 </div>
                 <div className="w-full flex justify-center lg:justify-start items-center">
@@ -146,8 +147,9 @@ const Home = () => {
                             </tr>
                             ))}
                         </tbody>
-                    </table>    
-                    <table className="w-full lg:hidden">
+                    </table> 
+                    <div className="w-11/12 lg:hidden m-auto border-2 border-gray-900 rounded-lg">   
+                    <table className="w-full">
                         <thead className="border-b border-b-gray-200">
                         <tr className="bg-gray-900 text-gray-100">
                             <th className="w-2/12 p-2 text-center">Assets</th>
@@ -158,39 +160,39 @@ const Home = () => {
                         <tbody>
                             {state.filterdata.map(item => (
                             <tr key={item.data.id} className='bg-gray-900 border-b border-b-gray-200'>
-                                <td className="w-2/12 p-2 text-center font-semibold text-white">{item.data.name + " (" + item.data.symbol + ")"}</td>
-                                <td className="flex flex-col items-center justify-center text-white font-semibold border">
-                                    <div className="flex w-full justify-around">
+                                <td className="w-2/12 p-2 text-center font-semibold text-white text-sm">{item.data.name + " (" + item.data.symbol + ")"}</td>
+                                <td className="flex flex-col items-center justify-center text-white text-xs border">
+                                    <div className="flex w-full justify-around items-center">
                                         <span>Price (USD)</span>
-                                        <span>{item.data.price_usd}</span>
+                                        <span className="ml-2">{item.data.price_usd}</span>
                                     </div>
-                                    <div className="flex w-full justify-around">
+                                    <div className="flex w-full justify-around items-center mt-1 border-t border-t-white">
                                         <span>Change VS USD (1H)</span>
-                                        <span style={item.data.percent_change_last_1_hour< 0 ? {color:"red"} : {color:"green"}}>{item.data.percent_change_usd_last_1_hour}%</span>
+                                        <span className="ml-2" style={item.data.percent_change_last_1_hour< 0 ? {color:"red"} : {color:"green"}}>{item.data.percent_change_usd_last_1_hour}%</span>
                                     </div>
-                                    <div className="flex w-full justify-around">
+                                    <div className="flex w-full justify-around items-center mt-1 border-t border-t-white">
                                         <span>Change VS USD (24H)</span>
-                                        <span style={item.data.percent_change_usd_last_24_hours< 0 ? {color:"red"} : {color:"green"}}>{item.data.percent_change_usd_last_24_hours}%</span>
+                                        <span className="ml-2" style={item.data.percent_change_usd_last_24_hours< 0 ? {color:"red"} : {color:"green"}}>{item.data.percent_change_usd_last_24_hours}%</span>
                                     </div>
-                                    <div className="flex w-full justify-around">
+                                    <div className="flex w-full justify-around items-center mt-1 border-t border-t-white">
                                         <span>Reported Marketcap</span>
-                                        <span>{item.data.current_marketcap_usd}</span>
+                                        <span className="ml-2">{item.data.current_marketcap_usd}</span>
                                     </div>
-                                    <div className="flex w-full justify-around">
+                                    <div className="flex w-full justify-around items-center mt-1 border-t border-t-white">
                                         <span>Real Volume (24H)</span>
-                                        <span>{item.data.real_volume_last_24_hours}</span>
+                                        <span className="ml-2">{item.data.real_volume_last_24_hours}</span>
                                     </div>
-                                    <div className="flex w-full justify-around">
+                                    <div className="flex w-full justify-around items-center mt-1 border-t border-t-white">
                                         <span>Change VS USD (7D)</span>
-                                        <span style={item.data.percent_change_last_1_week< 0 ? {color:"red"} : {color:"green"}}>{item.data.percent_change_last_1_week}%</span>
+                                        <span className="ml-2" style={item.data.percent_change_last_1_week< 0 ? {color:"red"} : {color:"green"}}>{item.data.percent_change_last_1_week}%</span>
                                     </div>
-                                    <div className="flex w-full justify-around">
+                                    <div className="flex w-full justify-around items-center mt-1 border-t border-t-white">
                                         <span>Change VS USD (30D)</span>
-                                        <span style={item.data.percent_change_last_1_month< 0 ? {color:"red"} : {color:"green"}}>{item.data.percent_change_last_1_month}%</span>
+                                        <span className="ml-2" style={item.data.percent_change_last_1_month< 0 ? {color:"red"} : {color:"green"}}>{item.data.percent_change_last_1_month}%</span>
                                     </div>
-                                    <div className="flex w-full justify-around">
+                                    <div className="flex w-full justify-around items-center mt-1 border-t border-t-white">
                                         <span>Change VS USD (YTD)</span>
-                                        <span style={item.data.percent_change_last_1_year< 0 ? {color:"red"} : {color:"green"}}>{item.data.percent_change_last_1_year}%</span>
+                                        <span className="ml-2" style={item.data.percent_change_last_1_year< 0 ? {color:"red"} : {color:"green"}}>{item.data.percent_change_last_1_year}%</span>
                                     </div>
                                 </td>
                             <td className="w-5/12 p-2 text-center font-semibold border">
@@ -199,9 +201,10 @@ const Home = () => {
                             </tr>
                             ))}
                         </tbody>
-                    </table>    
+                    </table>
+                    </div>    
                 </div>
             </div>
-        </>
+        </div>
 }
 export default Home;

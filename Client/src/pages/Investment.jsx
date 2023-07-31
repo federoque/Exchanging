@@ -47,15 +47,18 @@ return !state.data ?
     :
         <>
             <Navbar />
-            <div className=" mt-[10vh] w-11/12 ml-10 z-0 flex flex-col items-center">
-                <h2 className="text-3xl font-bold mt-4">Investment Calculator</h2>
-                <div className="mt-4 h-5/6 w-full flex justify-center">
-                    <div className="w-full lg:w-[50vw] border border-black bg-gray-100 flex flex-col items-center rounded-2xl overflow py-10">
-                        <h3 className="mt-2 text-xl font-bold">Calculate your Anual Investment</h3>
-                        <p className="font-semibold text-lg mt-2">Enter your USD amount:</p>
-                        <input style={{appearance:"none"}} value={amount} onChange={handleAmount} className="bg-gray-300 mt-2 px-4 py-2 text-center text-2xl border border-gray-600 rounded-lg inputamount" type="number" />
-                        <p style={!error ? {display:"none"} : {display:"block"}} className="text-red-500"> Enter a positive amount</p>
-                        <button onClick={handleSubmit} className="mt-6 py-2 px-8 border-2 border-black rounded-full font-bold bg-[rgb(255,222,89)] hover:bg-yellow-400 text-xl">Calculate</button>
+                <div className="bg-gray-100 min-h-[90vh] flex items-start justify-center mt-[10vh]">
+                    <div className="bg-white p-8 rounded-md shadow-lg max-w-md w-full mt-10">
+                        <h1 className="text-3xl font-bold mb-4">Investment Calculator</h1>
+                        <h2 className="text-xl text-gray-600 mb-6">Calculate your Annual Investment</h2>
+                        <form onSubmit={handleSubmit}>
+                            <div className="mb-4">
+                                <label htmlFor="investment-amount" className="block text-gray-700">Enter your USD amount:</label>
+                                <input value={amount} onChange={handleAmount} type="number" className="mt-2 block w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-400 focus:outline-none" />
+                                <p style={!error ? {display:"none"} : {display:"block"}} className="text-red-500"> Enter a positive amount</p>
+                            </div>
+                            <button type="submit" className=" bg-[rgb(84,84,84)] hover:bg-[rgb(255,222,89)] hover:text-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none">Calculate</button>
+                        </form>
                         <div className="mt-4 " style={investment ? {display:"block"} : {display: "none"}}>
                             <div className="flex justify-center">
                                 <p className="mr-2">Amount:</p>
@@ -77,7 +80,6 @@ return !state.data ?
                                 <p>Final Amount (ADA): {investment ? (investment.cardano/state.ada_price).toFixed(2) : 0}</p>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
             
